@@ -1,0 +1,14 @@
+services:
+  web:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      SECRET_KEY: ${SECRET_KEY:-replace-with-a-random-secret-of-at-least-32-characters}
+      DATABASE_URL: sqlite:////data/pact.db   # swap for postgresql+psycopg://user:pass@db/pact
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434/v1}
+      LLM_MODEL: ${LLM_MODEL:-}
+      LLM_EMBED_MODEL: ${LLM_EMBED_MODEL:-}
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    volumes: ["data:/data"]
+volumes:
+  data:
